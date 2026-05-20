@@ -95,7 +95,7 @@ export default function DropZone({ onFile, file, preview, isPdf, pdfPageCount, o
         </div>
 
         <div className="leading-tight">
-          <p className="text-slate-800 text-[11px] font-semibold tracking-wide">{dragging ? 'Thả file tại đây' : 'Kéo thả hoặc nhấn để chọn file'}</p>
+          <p className="text-slate-800 text-[11px] font-semibold tracking-wide">{dragging ? 'Thả file tại đây' : 'Kéo thả, nhấn hoặc Ctrl + V để chọn file'}</p>
           <p className="text-[9px] text-slate-400 mt-0.5">Hỗ trợ ảnh JPG, PNG, WEBP hoặc PDF • Tối đa 10MB</p>
         </div>
       </div>

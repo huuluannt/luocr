@@ -58,6 +58,33 @@ export default function App() {
     }
   }, [])
 
+  // Clipboard paste event listener (Ctrl + V)
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      const items = e.clipboardData?.items
+      if (!items) return
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i]
+        if (item.kind === 'file') {
+          const file = item.getAsFile()
+          if (file) {
+            if (file.type.startsWith('image/') || file.type === 'application/pdf') {
+              handleFile(file)
+              e.preventDefault()
+              break
+            }
+          }
+        }
+      }
+    }
+
+    window.addEventListener('paste', handlePaste)
+    return () => {
+      window.removeEventListener('paste', handlePaste)
+    }
+  }, [handleFile])
+
   const handleClear = () => {
     setFile(null)
     setPreview(null)
