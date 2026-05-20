@@ -28,41 +28,41 @@ interface Engine {
 const ENGINES: Engine[] = [
   {
     id: 'tesseract',
-    icon: <Cpu size={18} />,
+    icon: <Cpu size={16} />,
     name: 'Tesseract Local',
-    badge: 'Mien phi & Cuc bo',
-    badgeClass: 'bg-emerald-900/50 text-emerald-400 border-emerald-700/50',
-    privacy: 'Anh KHONG roi khoi trinh duyet. Hoan toan rieng tu.',
+    badge: 'Cục bộ & Miễn phí',
+    badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
+    privacy: 'Ảnh xử lý trực tiếp trên trình duyệt của bạn.',
     requiresKey: false,
     mayCost: false,
   },
   {
     id: 'ocrspace',
-    icon: <Globe size={18} />,
+    icon: <Globe size={16} />,
     name: 'OCR.space',
-    badge: 'Free Quota',
-    badgeClass: 'bg-blue-900/50 text-blue-400 border-blue-700/50',
-    privacy: 'Anh se duoc gui len may chu OCR.space de xu ly.',
+    badge: 'Mã miễn phí',
+    badgeClass: 'bg-blue-50 text-blue-700 border-blue-200/60',
+    privacy: 'Ảnh được gửi lên máy chủ OCR.space để xử lý.',
     requiresKey: false,
     mayCost: false,
   },
   {
     id: 'google',
-    icon: <Eye size={18} />,
-    name: 'Google Cloud Vision',
-    badge: 'Can API Key',
-    badgeClass: 'bg-amber-900/50 text-amber-400 border-amber-700/50',
-    privacy: 'Anh gui len Google. Co the mat phi tuy cau hinh billing.',
+    icon: <Eye size={16} />,
+    name: 'Google Vision',
+    badge: 'Cần API Key',
+    badgeClass: 'bg-amber-50 text-amber-700 border-amber-200/60',
+    privacy: 'Ảnh gửi lên Google. Có thể tính phí theo biểu giá API.',
     requiresKey: true,
     mayCost: true,
   },
   {
     id: 'azure',
-    icon: <Cloud size={18} />,
+    icon: <Cloud size={16} />,
     name: 'Azure AI Vision',
-    badge: 'Can Endpoint + Key',
-    badgeClass: 'bg-amber-900/50 text-amber-400 border-amber-700/50',
-    privacy: 'Anh gui len Azure. Co the mat phi tuy cap do dich vu.',
+    badge: 'Cần Endpoint + Key',
+    badgeClass: 'bg-purple-50 text-purple-700 border-purple-200/60',
+    privacy: 'Ảnh gửi lên Azure AI. Có thể tính phí theo biểu giá dịch vụ.',
     requiresKey: true,
     mayCost: true,
   },
@@ -97,18 +97,18 @@ export default function EngineSelector({ selected, onSelect, settings, onSetting
   const s = settings
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {/* Auto mode toggle */}
-      <div className="glass rounded-xl px-4 py-3 flex items-center justify-between">
+      <div className="glass rounded-xl px-3 py-2 flex items-center justify-between border border-slate-200 bg-white">
         <div>
-          <p className="text-sm font-medium text-ink-200">Tu dong chon mien phi</p>
-          <p className="text-xs text-ink-500">Thu Tesseract truoc, goi y OCR.space neu can</p>
+          <p className="text-xs font-semibold text-slate-800">Tự động chọn miễn phí</p>
+          <p className="text-[10px] text-slate-400">Thử Tesseract trước, gợi ý OCR.space nếu cần</p>
         </div>
         <button
           onClick={() => onAutoMode(!autoMode)}
-          className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${autoMode ? 'bg-amber-500' : 'bg-ink-700'}`}
+          className={`relative w-9 h-5 rounded-full transition-colors duration-250 ${autoMode ? 'bg-indigo-600' : 'bg-slate-200'}`}
         >
-          <span className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform duration-200 ${autoMode ? 'translate-x-5' : ''}`} />
+          <span className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-250 ${autoMode ? 'translate-x-4' : ''}`} />
         </button>
       </div>
 
@@ -118,100 +118,97 @@ export default function EngineSelector({ selected, onSelect, settings, onSetting
         const disabled = isEngineDisabled(engine.id)
 
         return (
-          <div key={engine.id} className={`glass rounded-xl overflow-hidden transition-all duration-200
-            ${isSelected ? 'ring-1 ring-amber-500/50' : ''}
-            ${disabled ? 'opacity-50' : ''}`}>
+          <div key={engine.id} className={`rounded-xl overflow-hidden transition-all duration-250 border-2
+            ${isSelected ? 'bg-yellow-100 border-black shadow-md shadow-yellow-200/30 scale-[1.015]' : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-sm'}
+            ${disabled ? 'opacity-40' : ''}`}>
             <button
-              className={`w-full px-4 py-3 flex items-center gap-3 text-left transition-colors
-                ${isSelected ? 'bg-amber-500/5' : 'hover:bg-ink-800/50'}
+              className={`w-full px-3 py-2 flex items-center gap-2.5 text-left transition-all duration-250
+                ${isSelected ? 'bg-transparent' : 'hover:bg-slate-50/40'}
                 ${autoMode && engine.id !== 'tesseract' ? 'cursor-default' : 'cursor-pointer'}`}
               onClick={() => handleSelect(engine)}
               disabled={disabled}
             >
-              <span className={`shrink-0 ${isSelected ? 'text-amber-400' : 'text-ink-500'}`}>{engine.icon}</span>
+              <span className={`shrink-0 transition-transform duration-250 ${isSelected ? 'text-black scale-110 font-bold' : 'text-slate-400'}`}>{engine.icon}</span>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-sm font-medium text-ink-100">{engine.name}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full border ${engine.badgeClass}`}>{engine.badge}</span>
-                  {engine.mayCost && <span className="text-xs px-2 py-0.5 rounded-full border bg-red-900/30 text-red-400 border-red-700/40">Co the mat phi</span>}
-                  {disabled && <span className="text-xs text-red-400">Da tam tat</span>}
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className={`text-[11px] font-bold leading-tight transition-colors duration-250 ${isSelected ? 'text-black font-extrabold' : 'text-slate-800'}`}>{engine.name}</span>
+                  <span className={`text-[9px] px-1.5 py-0.5 rounded border leading-none ${engine.badgeClass}`}>{engine.badge}</span>
+                  {engine.mayCost && <span className="text-[9px] px-1.5 py-0.5 rounded border bg-red-50 text-red-600 border-red-150 leading-none">Có phí</span>}
+                  {disabled && <span className="text-[9px] text-red-500 font-semibold">Đang tắt</span>}
                 </div>
               </div>
               {engine.requiresKey && (
                 <button onClick={(e) => { e.stopPropagation(); setExpanded(expanded === engine.id ? null : engine.id) }}
-                  className="text-ink-500 hover:text-amber-400 transition-colors shrink-0">
-                  {expanded === engine.id ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  className="text-slate-400 hover:text-indigo-600 transition-colors shrink-0 p-1">
+                  {expanded === engine.id ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
                 </button>
               )}
             </button>
 
             {/* Privacy note */}
-            <div className="px-4 pb-2 flex items-start gap-1.5">
-              <Shield size={11} className="text-ink-600 mt-0.5 shrink-0" />
-              <span className="text-xs text-ink-600">{engine.privacy}</span>
+            <div className="px-3 pb-1.5 flex items-start gap-1">
+              <Shield size={10} className="text-slate-350 mt-0.5 shrink-0" />
+              <span className="text-[9px] text-slate-400 leading-none">{engine.privacy}</span>
             </div>
 
             {/* Disabled reset */}
             {disabled && (
-              <div className="px-4 pb-3">
-                <button onClick={() => enableEngine(engine.id)} className="text-xs text-amber-400 hover:underline">
-                  Thu lai engine nay
+              <div className="px-3 pb-2">
+                <button onClick={() => enableEngine(engine.id)} className="text-[10px] text-indigo-600 hover:underline">
+                  Thử lại engine này
                 </button>
               </div>
             )}
 
             {/* Config panel for cloud engines */}
             {(engine.id === 'ocrspace' || expanded === engine.id) && (
-              <div className={`border-t border-ink-700/30 px-4 py-3 space-y-3 ${engine.id === 'ocrspace' && !isSelected && !expanded ? 'hidden' : ''}`}>
+              <div className={`border-t border-slate-100 px-3 py-2 space-y-2 bg-slate-50/40 ${engine.id === 'ocrspace' && !isSelected && !expanded ? 'hidden' : ''}`}>
                 {engine.id === 'ocrspace' && isSelected && (
                   <div>
-                    <label className="block text-xs text-ink-400 mb-1">API Key (tuy chon - de trong de dung demo key)</label>
+                    <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">API Key (tùy chọn - để trống dùng demo key)</label>
                     <input
                       type="text"
-                      placeholder="Key rieng cua ban (tuy chon)"
+                      placeholder="Key riêng của bạn (nếu có)"
                       value={s.ocrspaceKey}
                       onChange={(e) => onSettingsChange({ ...s, ocrspaceKey: e.target.value })}
-                      className="w-full bg-ink-900 text-ink-200 text-xs px-3 py-2 rounded-lg border border-ink-700 focus:border-amber-500 outline-none font-mono"
+                      className="w-full bg-white text-slate-800 text-[10px] px-2.5 py-1.5 rounded border border-slate-200 focus:border-indigo-500 outline-none font-mono"
                     />
-                    <p className="text-xs text-ink-600 mt-1">De trong se dung demo key (co gioi han). Lay key mien phi tai ocr.space</p>
                   </div>
                 )}
                 {engine.id === 'google' && expanded === 'google' && (
                   <div>
-                    <label className="block text-xs text-ink-400 mb-1">Google Cloud Vision API Key *</label>
+                    <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Google Cloud Vision API Key *</label>
                     <input
                       type="password"
                       placeholder="AIza..."
                       value={s.googleKey}
                       onChange={(e) => onSettingsChange({ ...s, googleKey: e.target.value })}
-                      className="w-full bg-ink-900 text-ink-200 text-xs px-3 py-2 rounded-lg border border-ink-700 focus:border-amber-500 outline-none font-mono"
+                      className="w-full bg-white text-slate-800 text-[10px] px-2.5 py-1.5 rounded border border-slate-200 focus:border-indigo-500 outline-none font-mono"
                     />
-                    <p className="text-xs text-ink-600 mt-1">Key luu trong localStorage. Khong gui len bat ky may chu nao khac ngoai Google.</p>
                   </div>
                 )}
                 {engine.id === 'azure' && expanded === 'azure' && (
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     <div>
-                      <label className="block text-xs text-ink-400 mb-1">Azure Endpoint *</label>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Azure Endpoint *</label>
                       <input
                         type="text"
                         placeholder="https://your-resource.cognitiveservices.azure.com"
                         value={s.azureEndpoint}
                         onChange={(e) => onSettingsChange({ ...s, azureEndpoint: e.target.value })}
-                        className="w-full bg-ink-900 text-ink-200 text-xs px-3 py-2 rounded-lg border border-ink-700 focus:border-amber-500 outline-none font-mono"
+                        className="w-full bg-white text-slate-800 text-[10px] px-2.5 py-1.5 rounded border border-slate-200 focus:border-indigo-500 outline-none font-mono"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-ink-400 mb-1">Azure Subscription Key *</label>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Azure Subscription Key *</label>
                       <input
                         type="password"
                         placeholder="Subscription key..."
                         value={s.azureKey}
                         onChange={(e) => onSettingsChange({ ...s, azureKey: e.target.value })}
-                        className="w-full bg-ink-900 text-ink-200 text-xs px-3 py-2 rounded-lg border border-ink-700 focus:border-amber-500 outline-none font-mono"
+                        className="w-full bg-white text-slate-800 text-[10px] px-2.5 py-1.5 rounded border border-slate-200 focus:border-indigo-500 outline-none font-mono"
                       />
                     </div>
-                    <p className="text-xs text-ink-600">Key luu trong localStorage. Khong gui len bat ky may chu nao khac ngoai Azure.</p>
                   </div>
                 )}
               </div>
@@ -222,24 +219,24 @@ export default function EngineSelector({ selected, onSelect, settings, onSetting
 
       {/* Cloud warning modal */}
       {showCloudWarn && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-          <div className="glass rounded-2xl max-w-md w-full p-6 space-y-4">
-            <div className="flex items-center gap-3">
-              <AlertTriangle className="text-amber-400 shrink-0" size={24} />
-              <h3 className="text-lg font-semibold text-ink-100">Canh bao bao mat</h3>
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-sm w-full p-5 space-y-3.5 shadow-xl border border-slate-100">
+            <div className="flex items-center gap-2.5">
+              <AlertTriangle className="text-amber-500 shrink-0" size={20} />
+              <h3 className="text-sm font-bold text-slate-800">Cảnh báo bảo mật</h3>
             </div>
-            <p className="text-sm text-ink-300">
-              Khi su dung engine nay, anh/PDF cua ban se duoc gui len may chu bên ngoai (Google hoac Azure) de xu ly.
+            <p className="text-xs text-slate-500 leading-normal">
+              Khi sử dụng engine này, tài liệu của bạn sẽ được gửi lên máy chủ đám mây (Google hoặc Azure) để nhận diện.
             </p>
-            <p className="text-sm text-amber-400/80">
-              Service nay co the mat phi tuy theo cau hinh billing cua tai khoan Google/Azure cua ban. Vui long kiem tra han muc mien phi truoc.
+            <p className="text-[11px] text-amber-600 font-semibold leading-normal">
+              Dịch vụ này có thể phát sinh chi phí tùy thuộc vào cài đặt tài khoản Google/Azure của bạn.
             </p>
-            <div className="flex gap-3 pt-2">
-              <button onClick={() => setShowCloudWarn(false)} className="flex-1 px-4 py-2 rounded-xl border border-ink-600 text-ink-300 text-sm hover:border-ink-500 transition-colors">
-                Huy
+            <div className="flex gap-2.5 pt-1.5">
+              <button onClick={() => setShowCloudWarn(false)} className="flex-1 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-500 text-xs font-semibold hover:bg-slate-50 transition-colors">
+                Hủy
               </button>
-              <button onClick={confirmCloud} className="flex-1 px-4 py-2 rounded-xl bg-amber-500 text-ink-900 text-sm font-medium hover:bg-amber-400 transition-colors">
-                Toi hieu, tiep tuc
+              <button onClick={confirmCloud} className="flex-1 px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 transition-colors">
+                Tiếp tục
               </button>
             </div>
           </div>

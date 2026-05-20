@@ -45,20 +45,20 @@ export default function ResultPanel({ result, loading, progress, error, onClear 
 
   if (loading) {
     return (
-      <div className="glass rounded-2xl p-6 flex flex-col items-center justify-center h-full min-h-0 w-full gap-4 border border-ink-800/40">
-        <div className="relative w-16 h-16">
-          <div className="absolute inset-0 rounded-full border-2 border-ink-700/30" />
+      <div className="glass rounded-xl p-5 flex flex-col items-center justify-center h-full min-h-0 w-full gap-3 border border-slate-200 bg-white">
+        <div className="relative w-12 h-12">
+          <div className="absolute inset-0 rounded-full border-2 border-slate-100" />
           <div
-            className="absolute inset-0 rounded-full border-2 border-amber-400 border-t-transparent animate-spin"
-            style={{ transform: 'rotate(0deg)' }}
+            className="absolute inset-0 rounded-full border-2 border-indigo-600 border-t-transparent animate-spin"
+            style={{ transform: 'rotate(0deg)', borderTopColor: 'transparent' }}
           />
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-xs font-mono text-amber-400">{progress}%</span>
+            <span className="text-[10px] font-mono font-bold text-indigo-600">{progress}%</span>
           </div>
         </div>
-        <div className="text-center">
-          <p className="text-ink-200 text-sm font-semibold tracking-wide">Đang nhận dạng văn bản...</p>
-          <p className="text-[10px] text-ink-500 mt-1">Vui lòng đợi trong giây lát</p>
+        <div className="text-center leading-tight">
+          <p className="text-slate-800 text-xs font-semibold tracking-wide">Đang nhận dạng văn bản...</p>
+          <p className="text-[9px] text-slate-400 mt-0.5">Vui lòng đợi trong giây lát</p>
         </div>
       </div>
     )
@@ -66,74 +66,74 @@ export default function ResultPanel({ result, loading, progress, error, onClear 
 
   if (error) {
     return (
-      <div className="glass rounded-2xl p-6 h-full min-h-0 w-full flex flex-col items-center justify-center gap-3 border border-ink-800/40">
-        <div className="w-10 h-10 rounded-full bg-red-900/20 border border-red-500/20 flex items-center justify-center">
-          <span className="text-red-400 text-lg font-bold">!</span>
+      <div className="glass rounded-xl p-5 h-full min-h-0 w-full flex flex-col items-center justify-center gap-2.5 border border-slate-200 bg-white">
+        <div className="w-8 h-8 rounded-full bg-red-50 border border-red-200 flex items-center justify-center">
+          <span className="text-red-600 text-sm font-bold">!</span>
         </div>
-        <p className="text-red-400 text-xs text-center font-semibold max-w-md">{error}</p>
-        <button onClick={onClear} className="text-xs text-ink-400 hover:text-amber-400 transition-colors underline underline-offset-4">Thử lại</button>
+        <p className="text-red-600 text-xs text-center font-semibold max-w-md leading-normal">{error}</p>
+        <button onClick={onClear} className="text-xs text-slate-500 hover:text-indigo-600 font-semibold transition-colors underline underline-offset-4">Thử lại</button>
       </div>
     )
   }
 
   if (!result && !text) {
     return (
-      <div className="glass rounded-2xl p-6 h-full min-h-0 w-full flex flex-col items-center justify-center gap-3 text-ink-600 border border-ink-800/40 bg-ink-950/5">
-        <FileText size={36} className="opacity-20 animate-pulse" />
-        <p className="text-xs font-medium tracking-wide">Kết quả sẽ hiển thị ở đây</p>
+      <div className="glass rounded-xl p-5 h-full min-h-0 w-full flex flex-col items-center justify-center gap-2.5 text-slate-400 border border-slate-200 bg-slate-50/20">
+        <FileText size={32} className="opacity-30 animate-pulse text-indigo-500/85" />
+        <p className="text-[11px] font-semibold tracking-wide">Kết quả sẽ hiển thị ở đây</p>
       </div>
     )
   }
 
   return (
-    <div className="glass rounded-2xl overflow-hidden flex flex-col h-full min-h-0 w-full border border-ink-800/40 shadow-lg">
+    <div className="glass rounded-xl overflow-hidden flex flex-col h-full min-h-0 w-full border border-slate-200 shadow-sm bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-ink-700/40 bg-ink-950/20 flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold text-ink-200 tracking-wider">KẾT QUẢ</span>
+      <div className="flex items-center justify-between px-3.5 py-2 border-b border-slate-100 bg-slate-50/50 flex-shrink-0">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-[10px] font-bold text-slate-500 tracking-wider shrink-0">KẾT QUẢ</span>
           {result && (
-            <>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-medium">
+            <div className="flex items-center gap-1.5 truncate">
+              <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/50 font-bold truncate">
                 {ENGINE_LABELS[result.engine] || result.engine}
               </span>
               {result.confidence !== undefined && (
-                <span className={`text-[10px] px-2 py-0.5 rounded-full border font-medium
-                  ${result.confidence >= 80 ? 'bg-emerald-900/20 text-emerald-400 border-emerald-700/30' : 'bg-yellow-900/20 text-yellow-400 border-yellow-700/30'}`}>
+                <span className={`text-[9px] px-1.5 py-0.5 rounded-full border font-bold shrink-0
+                  ${result.confidence >= 80 ? 'bg-emerald-50 text-emerald-700 border-emerald-200/50' : 'bg-amber-50 text-amber-700 border-amber-200/50'}`}>
                   {result.confidence}% tin cậy
                 </span>
               )}
-            </>
+            </div>
           )}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 shrink-0">
           <button
             onClick={copyText}
-            className="flex items-center gap-1.5 text-[11px] px-2.5 py-1.5 rounded-lg bg-ink-800 hover:bg-ink-700 text-ink-300 hover:text-ink-100 transition-colors border border-ink-700/40"
+            className="flex items-center gap-1 text-[10px] px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold transition-colors border border-slate-200"
             title="Sao chép"
           >
-            {copied ? <CheckCircle size={12} className="text-emerald-400" /> : <Copy size={12} />}
+            {copied ? <CheckCircle size={11} className="text-emerald-600" /> : <Copy size={11} />}
             {copied ? 'Đã chép' : 'Chép'}
           </button>
           <button
             onClick={() => download('txt')}
-            className="flex items-center gap-1.5 text-[11px] px-2.5 py-1.5 rounded-lg bg-ink-800 hover:bg-ink-700 text-ink-300 hover:text-ink-100 transition-colors border border-ink-700/40"
+            className="flex items-center gap-1 text-[10px] px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold transition-colors border border-slate-200"
           >
-            <Download size={12} />
+            <Download size={11} />
             .txt
           </button>
           <button
             onClick={() => download('md')}
-            className="flex items-center gap-1.5 text-[11px] px-2.5 py-1.5 rounded-lg bg-ink-800 hover:bg-ink-700 text-ink-300 hover:text-ink-100 transition-colors border border-ink-700/40"
+            className="flex items-center gap-1 text-[10px] px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold transition-colors border border-slate-200"
           >
-            <Download size={12} />
+            <Download size={11} />
             .md
           </button>
           <button
             onClick={() => { setText(''); onClear() }}
-            className="text-ink-500 hover:text-red-400 transition-colors p-1.5 ml-1"
+            className="text-slate-400 hover:text-red-500 transition-colors p-1 ml-0.5"
             title="Xóa kết quả"
           >
-            <Trash2 size={13} />
+            <Trash2 size={12} />
           </button>
         </div>
       </div>
@@ -142,14 +142,14 @@ export default function ResultPanel({ result, loading, progress, error, onClear 
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
-        className="flex-1 bg-transparent text-ink-200 p-4 resize-none outline-none min-h-0 overflow-y-auto placeholder-ink-700 custom-scrollbar focus:bg-ink-950/10 transition-colors"
+        className="flex-1 bg-white text-slate-800 p-3.5 resize-none outline-none min-h-0 overflow-y-auto placeholder-slate-300 custom-scrollbar focus:bg-slate-50/20 transition-colors border-0"
         placeholder="Văn bản trích xuất sẽ hiển thị ở đây..."
         spellCheck={false}
       />
 
-      <div className="px-4 py-2 border-t border-ink-700/30 bg-ink-950/10 flex items-center justify-between flex-shrink-0">
-        <span className="text-[10px] text-ink-500 font-mono">{text.length} ký tự</span>
-        <span className="text-[10px] text-ink-600 font-medium italic">Có thể chỉnh sửa trực tiếp</span>
+      <div className="px-3.5 py-1.5 border-t border-slate-100 bg-slate-50/40 flex items-center justify-between flex-shrink-0">
+        <span className="text-[9px] text-slate-400 font-mono">{text.length} ký tự</span>
+        <span className="text-[9px] text-slate-400 font-medium italic">Có thể chỉnh sửa trực tiếp</span>
       </div>
     </div>
   )

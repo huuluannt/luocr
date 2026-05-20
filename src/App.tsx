@@ -151,22 +151,22 @@ export default function App() {
   const canRun = !!file && !loading && !pdfLoading && (isPdf ? pdfImages.length > 0 : true)
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-ink-900 font-sans select-none" style={{ background: 'radial-gradient(ellipse at 20% 20%, #1a1508 0%, #0f0d09 60%)' }}>
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-50 font-sans text-slate-800">
       {/* Header */}
-      <header className="border-b border-ink-800/60 flex-shrink-0 z-40 bg-ink-950/80 backdrop-blur-md">
+      <header className="border-b border-slate-200 flex-shrink-0 z-40 bg-white shadow-sm">
         <div className="w-full px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/25 animate-pulse-slow">
-              <Scan size={16} className="text-ink-900" />
+            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-200">
+              <Scan size={16} className="text-white" />
             </div>
             <div>
-              <span className="font-display font-bold text-base text-ink-100 tracking-tight">LuOCR</span>
-              <span className="text-[11px] text-ink-500 ml-3 hidden sm:inline border-l border-ink-800 pl-3">Nhận dạng văn bản từ ảnh & PDF</span>
+              <span className="font-display font-bold text-base text-slate-900 tracking-tight">LuOCR</span>
+              <span className="text-[11px] text-slate-400 ml-3 hidden sm:inline border-l border-slate-200 pl-3">Nhận dạng văn bản từ ảnh & PDF</span>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <a href="https://ocr.space/OCRAPI" target="_blank" rel="noopener noreferrer"
-              className="text-xs text-ink-400 hover:text-amber-400 transition-colors flex items-center gap-1.5 font-medium">
+              className="text-xs text-slate-500 hover:text-indigo-600 transition-colors flex items-center gap-1.5 font-semibold">
               <Info size={13} />
               Hướng dẫn API
             </a>
@@ -177,18 +177,31 @@ export default function App() {
       {/* Main Workspace (No global page scroll) */}
       <main className="flex-1 min-h-0 flex flex-col overflow-hidden">
         {/* Top Pane (toppane) */}
-        <div className="flex-[5.8] min-h-0 flex flex-col lg:flex-row border-b border-ink-800/40">
+        <div className="flex-[5.8] min-h-0 flex flex-row border-b border-slate-200">
           
           {/* Left Pane (leftpane) - Part 1: Chọn file */}
-          <div className="flex-1 min-h-0 overflow-y-auto p-5 flex flex-col gap-4 border-b lg:border-b-0 lg:border-r border-ink-800/40 custom-scrollbar">
+          <div className="flex-1 min-h-0 overflow-y-auto p-4 flex flex-col gap-3.5 border-r border-slate-200 custom-scrollbar">
             <div className="flex items-center justify-between flex-shrink-0">
-              <h2 className="text-[11px] font-semibold text-amber-500/90 uppercase tracking-widest flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse-amber"></span>
+              <h2 className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
                 1. Chọn file
               </h2>
             </div>
+
+            {/* OCR Button */}
+            <button
+              onClick={runOCR}
+              disabled={!canRun}
+              className={`w-full py-2.5 rounded-xl font-bold text-[11px] flex items-center justify-center gap-2 transition-all duration-300 flex-shrink-0 uppercase tracking-wider
+                ${canRun
+                  ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-100 hover:shadow-indigo-200 hover:-translate-y-0.5 active:translate-y-0'
+                  : 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'}`}
+            >
+              <Zap size={13} className={loading ? 'animate-bounce text-white' : 'text-current'} />
+              {loading ? 'Đang xử lý...' : 'Bắt đầu nhận dạng OCR'}
+            </button>
             
-            <div className="flex-1 min-h-0">
+            <div className="flex-shrink-0">
               <DropZone
                 onFile={handleFile}
                 file={file}
@@ -200,38 +213,25 @@ export default function App() {
             </div>
 
             {pdfLoading && (
-              <div className="glass rounded-xl px-4 py-2.5 flex items-center gap-3 flex-shrink-0 shadow-sm border border-amber-500/10">
-                <div className="w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
-                <span className="text-xs text-ink-300">Đang xử lý PDF...</span>
+              <div className="glass rounded-xl px-3 py-2 flex items-center gap-2.5 flex-shrink-0 shadow-sm border border-slate-200 bg-white">
+                <div className="w-3.5 h-3.5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+                <span className="text-[11px] text-slate-500 font-medium">Đang xử lý PDF...</span>
               </div>
             )}
 
             {/* Lang selector for tesseract */}
             {(selectedEngine === 'tesseract' || autoMode) && (
-              <div className="glass rounded-xl px-4 py-2.5 flex-shrink-0 border border-ink-800/30">
+              <div className="glass rounded-xl px-3.5 py-2 flex-shrink-0 border border-slate-200 bg-white shadow-sm">
                 <LangSelector lang={lang} onChange={setLang} disabled={loading} />
-                <p className="text-[10px] text-ink-500 mt-1">Hỗ trợ cho Tesseract Local. Cloud engine tự phát hiện ngôn ngữ.</p>
+                <p className="text-[9px] text-slate-400 mt-1">Hỗ trợ cho Tesseract Local. Cloud engine tự phát hiện ngôn ngữ.</p>
               </div>
             )}
-
-            {/* OCR Button */}
-            <button
-              onClick={runOCR}
-              disabled={!canRun}
-              className={`w-full py-3 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 transition-all duration-300 flex-shrink-0 uppercase tracking-wider
-                ${canRun
-                  ? 'bg-amber-500 hover:bg-amber-400 text-ink-900 shadow-[0_4px_20px_rgba(245,158,11,0.15)] hover:shadow-[0_4px_25px_rgba(245,158,11,0.25)] hover:-translate-y-0.5 active:translate-y-0'
-                  : 'bg-ink-850 text-ink-600 cursor-not-allowed border border-ink-800/30'}`}
-            >
-              <Zap size={14} className={loading ? 'animate-bounce' : ''} />
-              {loading ? 'Đang xử lý...' : 'Bắt đầu nhận dạng OCR'}
-            </button>
           </div>
 
           {/* Right Pane (rightpane) - Part 2: Chọn engine OCR */}
-          <div className="flex-1 lg:flex-[1.1] min-h-0 overflow-y-auto p-5 flex flex-col gap-4 custom-scrollbar">
-            <h2 className="text-[11px] font-semibold text-amber-500/90 uppercase tracking-widest flex items-center gap-2 flex-shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse-amber"></span>
+          <div className="flex-[1.1] min-h-0 overflow-y-auto p-4 flex flex-col gap-3.5 custom-scrollbar">
+            <h2 className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider flex items-center gap-2 flex-shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
               2. Chọn engine OCR
             </h2>
             <div className="flex-1">
@@ -251,13 +251,13 @@ export default function App() {
         </div>
 
         {/* Bottom Pane (bottompane) - Part 3: Kết quả */}
-        <div className="flex-[4.2] min-h-0 flex flex-col p-5 bg-ink-950/20">
-          <div className="flex items-center justify-between mb-3 flex-shrink-0">
-            <h2 className="text-[11px] font-semibold text-amber-500/90 uppercase tracking-widest flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse-amber"></span>
+        <div className="flex-[4.2] min-h-0 flex flex-col p-4 bg-slate-50/50">
+          <div className="flex items-center justify-between mb-2 flex-shrink-0">
+            <h2 className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
               3. Kết quả nhận dạng
             </h2>
-            <span className="text-[10px] text-ink-600 font-medium">Bảo mật tuyệt đối • Chạy trực tiếp trong trình duyệt</span>
+            <span className="text-[9px] text-slate-400 font-medium">Bảo mật tuyệt đối • Chạy trực tiếp trong trình duyệt</span>
           </div>
           <div className="flex-1 min-h-0">
             <ResultPanel

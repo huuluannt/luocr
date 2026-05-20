@@ -14,40 +14,40 @@ html, body, #root {
 
 body {
   font-family: 'Sora', sans-serif;
-  background-color: #0f0d09;
-  color: #e0ddd4;
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
 /* Custom Scrollbar Utilities */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(38, 34, 27, 0.3);
+  background: rgba(241, 245, 249, 0.4);
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #3d362a;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #574f41;
+  background: #94a3b8;
 }
 
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #26221b; }
-::-webkit-scrollbar-thumb { background: #574f41; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #706958; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
 .glass {
-  background: rgba(38, 34, 27, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(112, 105, 88, 0.2);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 3px 0 rgba(0, 0, 0, 0.02);
 }
 
 .drop-zone-active {
-  border-color: #f59e0b !important;
-  background: rgba(245, 158, 11, 0.05) !important;
+  border-color: #4f46e5 !important;
+  background: rgba(79, 70, 229, 0.02) !important;
 }
 
 @keyframes spin-slow {
@@ -55,6 +55,12 @@ body {
   to { transform: rotate(360deg); }
 }
 .animate-spin-slow { animation: spin-slow 2s linear infinite; }
+
+@keyframes pulse-accent {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.animate-pulse-accent { animation: pulse-accent 1.5s ease-in-out infinite; }
 
 @keyframes pulse-amber {
   0%, 100% { opacity: 1; }
@@ -64,6 +70,6 @@ body {
 
 textarea {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  line-height: 1.7;
+  font-size: 11px;
+  line-height: 1.55;
 }
